@@ -1076,58 +1076,50 @@ def eigenspace(input_matrix = None):
 ##############
 
 if __name__ == "__main__":
-    options_dict = {
-        "0": "add / subtract",
-        "1": "multiply",
-        "2": "row reduce",
-        "3": "inverse",
-        "4": "determinant",
-        "5": "cross product",
-        "6": "null space",
-        "7": "column space",
-        "8": "characteristic polynomial",
-        "9": "eigenvalue",
-        "10": "eigenspace",
-        "q": "quit"
-        }
-    print("-" * 30) #decoration
-    print("Select an option:")
-    print("-" * 30) #decoration
-    for (key, value) in options_dict.items():
-        print(f"{key} - {value}") #list choices
-    print("-" * 30) #decoration
-    user_input = str(input())
-    if user_input not in options_dict:
-        raise Exception("Error: invalid option")
-    else:
-        max_decimal = input("How many decimal places do you want your solution rounded to?\n")
-    if not max_decimal.isnumeric(): #ensure value can be converted to int
-        raise Exception("Error: invalid decimal")
-    elif user_input == "0":
-        print_matrix(add_matrix(), int(max_decimal))
-    elif user_input == "1":
-        print_matrix(multiply_matrices(), int(max_decimal))
-    elif user_input == "2":
-        print_matrix(reduced_echelon(), int(max_decimal))
-    elif user_input == "3":
-        print_matrix(inverse(), int(max_decimal))
-    elif user_input == "4":
-        print(round(determinant(), int(max_decimal)))
-    elif user_input == "5":
-        print(cross_product())
-    elif user_input == "6":
-        print_matrix(null_space(), int(max_decimal))
-    elif user_input == "7":
-        print_matrix(col_space(), int(max_decimal))
-    elif user_input == "8":
-        print_poly(char_poly(), int(max_decimal))
-    elif user_input == "9":
-        eigen_list = eigenvalues()
-        for eigenvalue in eigen_list:
-            print(f"{round(eigenvalue, int(max_decimal))}", end = " ")
-    elif user_input == "10":
-        print_eigenspace(eigenspace(), int(max_decimal))
-    elif user_input == "q":
-        print("Goodbye!")
-    else:
-        raise Exception("Error: Invalid input")
+    max_decimal = 3 #default, can be configured
+    print("=" * 45)
+    while True:
+        print("Enter a command or enter 'L' to list commands")
+        print("=" * 45)
+        user_input = input()
+        if user_input.lower() == "l":
+            option_descriptions = [
+            "add           : add / subtract matrices or vectors",
+            "multiply      : multiply matrices",
+            "row reduce    : row reduce a matrix",
+            "inverse       : inverse of a square matrix",
+            "determinant   : determinant of a square matrix",
+            "dot product   : dot product of two vectors",
+            "cross product : cross product of two vectors in R^3",
+            "null space    : null space of a matrix",
+            "column space  : column space of a matrix",
+            "polynomial    : characteristic polynomial of a square matrix",
+            "eigenvalue    : finds integral eigenvalues of a matrix",
+            "eigenspace    : finds eigenspaces corresponding to integral eigenvalues",
+            "q             : quit"
+            ]
+            for option in option_descriptions:
+                print(option)
+            print("=" * 45)
+        else:
+            options = {
+            "add"           : "print_matrix(add_matrix(), max_decimal)",
+            "multiply"      : "print_matrix(multiply_matrices(), max_decimal)",
+            "row reduce"    : "print_matrix(reduced_echelon(), max_decimal)",
+            "inverse"       : "print_matrix(inverse(), max_decimal)",
+            "determinant"   : "print(round(determinant(), max_decimal))",
+            "dot product"   : "print(dot_product())",
+            "cross product" : "print(cross_product())",
+            "null space"    : "print_matrix(null_space(), max_decimal)",
+            "column space"  : "print_matrix(col_space(), max_decimal)",
+            "polynomial"    : "print_poly(char_poly(), max_decimal)",
+            "eigenvalue"    : "print(eigenvalues())",
+            "eigenspace"    : "print_eigenspace(eigenspace(), max_decimal)",
+            "quit"          : "exit()"
+            }
+            print("=" * 45)
+            if user_input.lower() not in options:
+                print("Error: You did not select a valid option. Enter L to see options or try again.")
+            else:
+                eval(options[user_input])
+            print("=" * 45)
